@@ -2,7 +2,7 @@ const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const assert = require('assert');
 
-describe('SauceDemo', function () {
+describe('Project Sauce Demo', function () {
     let driver;
     this.timeout(20000); // Set timeout untuk menghindari false fail pada koneksi lambat
 
