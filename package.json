@@ -1,0 +1,30 @@
+{
+  "name": "tugas-sesi-9-web-ui-automation-fundamental",
+  "version": "1.0.0",
+  "description": "Proyek otomatisasi pengujian web UI menggunakan Selenium WebDriver dan Mocha pada situs SauceDemo, mencakup skenario login dan pengurutan produk.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests --recursive --timeout 60000",
+    "test:mochawesome": "mocha tests --recursive --timeout 60000 --reporter mochawesome",
+    "test:simple-html": "mocha tests --recursive --timeout 60000 --reporter mocha-simple-html-reporter --reporter-options output=report.html"
+  },
+  "keywords": [
+    "selenium",
+    "mocha",
+    "automation",
+    "testing",
+    "saucedemo",
+    "web-ui"
+  ],
+  "author": "Aman Swasono",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.34.0"
+  },
+  "devDependencies": {
+    "exceljs": "^4.4.0",
+    "mocha": "^11.7.1",
+    "mocha-simple-html-reporter": "^2.0.0",
+    "mochawesome": "^7.1.3"
+  }
+}

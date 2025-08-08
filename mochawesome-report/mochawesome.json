@@ -1,0 +1,157 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-08-08T08:58:03.892Z",
+    "end": "2025-08-08T08:58:06.526Z",
+    "duration": 2634,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "117cea83-7e2d-4b06-a49d-d22d3d0cc0b4",
+      "title": "",
+      "fullFile": "C:\\Users\\1139\\Desktop\\coba\\tests\\test_sesi9.js",
+      "file": "\\tests\\test_sesi9.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "dbd690af-7ad3-44fd-96dd-fd0165f4148f",
+          "title": "SauceDemo",
+          "fullFile": "C:\\Users\\1139\\Desktop\\coba\\tests\\test_sesi9.js",
+          "file": "\\tests\\test_sesi9.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"SauceDemo\"",
+              "fullTitle": "SauceDemo \"before all\" hook in \"SauceDemo\"",
+              "timedOut": false,
+              "duration": 1192,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const options = new chrome.Options().addArguments('--incognito'); // Mode incognito untuk mencegah cache/sesi lama\ndriver = await new Builder()\n    .forBrowser('chrome')\n    .setChromeOptions(options)\n    .build();",
+              "err": {},
+              "uuid": "7e7e19a8-41ff-42c0-bd4b-817f106ecb97",
+              "parentUUID": "dbd690af-7ad3-44fd-96dd-fd0165f4148f",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"SauceDemo\"",
+              "fullTitle": "SauceDemo \"after all\" hook in \"SauceDemo\"",
+              "timedOut": false,
+              "duration": 126,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await driver.quit();",
+              "err": {},
+              "uuid": "397e7ddf-3886-4867-b7d3-e3d391747255",
+              "parentUUID": "dbd690af-7ad3-44fd-96dd-fd0165f4148f",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "User berhasil login",
+              "fullTitle": "SauceDemo User berhasil login",
+              "timedOut": false,
+              "duration": 864,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await login();\n// Verifikasi elemen cart muncul setelah login\nconst cartButton = await driver.wait(until.elementLocated(By.css('.shopping_cart_link')), 10000);\nassert.ok(await cartButton.isDisplayed(), 'Keranjang belanja tidak tampil');\n// Verifikasi teks logo sesuai\nconst logo = await driver.findElement(By.className('app_logo'));\nconst logoText = await logo.getText();\nassert.strictEqual(logoText, 'Swag Labs', 'Logo tidak sesuai');",
+              "err": {},
+              "uuid": "ff969d16-efd1-43df-a84e-cc7f0c965979",
+              "parentUUID": "dbd690af-7ad3-44fd-96dd-fd0165f4148f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "User berhasil sort produk A-Z",
+              "fullTitle": "SauceDemo User berhasil sort produk A-Z",
+              "timedOut": false,
+              "duration": 445,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await login();\n// Pilih sort option A-Z\nconst sortDropdown = await driver.wait(until.elementLocated(By.css('select.product_sort_container')), 5000);\nawait sortDropdown.click();\nawait driver.findElement(By.css('select.product_sort_container option[value=\"az\"]')).click();\n// Ambil semua nama produk\nconst productNames = await driver.findElements(By.css('.inventory_item_name'));\nconst namesText = await Promise.all(productNames.map(el => el.getText()));\n// Buat array terurut untuk dibandingkan\nconst sortedNames = [...namesText].sort();\n// Validasi hasil sort\nassert.deepStrictEqual(\n    namesText,\n    sortedNames,\n    `Produk tidak terurut A-Z.\\nActual  : ${namesText.join(', ')}\\nExpected: ${sortedNames.join(', ')}`\n);",
+              "err": {},
+              "uuid": "e48f191d-63c7-4fd5-b47f-5caffc8a2a97",
+              "parentUUID": "dbd690af-7ad3-44fd-96dd-fd0165f4148f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ff969d16-efd1-43df-a84e-cc7f0c965979",
+            "e48f191d-63c7-4fd5-b47f-5caffc8a2a97"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1309,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 60000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
