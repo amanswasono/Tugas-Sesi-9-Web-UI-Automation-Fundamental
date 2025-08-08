@@ -1,4 +1,4 @@
-# Tugas Sesi 9 - Web UI Automation Fundamental
+## Tugas Sesi 9 - Web UI Automation Fundamental
 
 Proyek ini merupakan implementasi **Web UI Automation Testing** menggunakan **Selenium WebDriver** dan **Mocha** pada situs [SauceDemo](https://www.saucedemo.com/).  
 Pengujian dilakukan untuk memverifikasi skenario login dan pengurutan produk (sort) A-Z.
