@@ -1,5 +1,5 @@
 {
-  "name": "tugas-sesi-9-web-ui-automation-fundamental",
+  "name": "tugas-sesi-9 & 10-web-ui-automation-fundamental",
   "version": "1.0.0",
   "description": "Proyek otomatisasi pengujian web UI menggunakan Selenium WebDriver dan Mocha pada situs SauceDemo, mencakup skenario login dan pengurutan produk.",
   "main": "index.js",

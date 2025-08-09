@@ -4,12 +4,10 @@ const assert = require('assert');
 
 describe('Project Sauce Demo', function () {
     let driver;
-    this.timeout(20000); // Set timeout untuk menghindari false fail pada koneksi lambat
+    this.timeout(20000); // Timeout global
 
     /**
      * Helper: Login ke SauceDemo
-     * @param {string} username - Username untuk login (default: standard_user)
-     * @param {string} password - Password untuk login (default: secret_sauce)
      */
     async function login(username = 'standard_user', password = 'secret_sauce') {
         await driver.get('https://www.saucedemo.com');
@@ -18,49 +16,73 @@ describe('Project Sauce Demo', function () {
         await driver.findElement(By.css('[data-test="login-button"]')).click();
     }
 
-    // Jalankan sekali sebelum semua test: setup WebDriver
+    /**
+     * Helper: Logout dari SauceDemo
+     */
+    async function logout() {
+    // Cek apakah tombol menu ada di halaman
+    const menuButtons = await driver.findElements(By.css('#react-burger-menu-btn'));
+    if (menuButtons.length > 0) {
+        const isDisplayed = await menuButtons[0].isDisplayed();
+        if (isDisplayed) {
+            await menuButtons[0].click();
+            const logoutLinks = await driver.findElements(By.css('#logout_sidebar_link'));
+            if (logoutLinks.length > 0) {
+                await driver.wait(until.elementIsVisible(logoutLinks[0]), 5000);
+                await logoutLinks[0].click();
+                }
+            }
+        }
+    }
+
+
+    // Setup WebDriver (sekali sebelum semua test)
     before(async function () {
-        const options = new chrome.Options().addArguments('--incognito'); // Mode incognito untuk mencegah cache/sesi lama
+        const options = new chrome.Options().addArguments('--incognito');
         driver = await new Builder()
             .forBrowser('chrome')
             .setChromeOptions(options)
             .build();
     });
 
-    // Jalankan sekali setelah semua test: tutup WebDriver
+    // Jalankan sebelum setiap test
+    beforeEach(async function () {
+        await login(); // Semua test mulai dalam keadaan sudah login
+    });
+
+    // Jalankan setelah setiap test
+    afterEach(async function () {
+        try {
+            await logout(); // Bersihkan state supaya test tidak saling mempengaruhi
+        } catch (err) {
+            console.warn('Gagal logout di afterEach:', err.message);
+        }
+    });
+
+    // Tutup browser setelah semua test
     after(async function () {
         await driver.quit();
     });
 
     it('User berhasil login', async function () {
-        await login();
-
-        // Verifikasi elemen cart muncul setelah login
         const cartButton = await driver.wait(until.elementLocated(By.css('.shopping_cart_link')), 10000);
         assert.ok(await cartButton.isDisplayed(), 'Keranjang belanja tidak tampil');
 
-        // Verifikasi teks logo sesuai
         const logo = await driver.findElement(By.className('app_logo'));
         const logoText = await logo.getText();
         assert.strictEqual(logoText, 'Swag Labs', 'Logo tidak sesuai');
     });
 
     it('User berhasil sort produk A-Z', async function () {
-        await login();
-
-        // Pilih sort option A-Z
         const sortDropdown = await driver.wait(until.elementLocated(By.css('select.product_sort_container')), 5000);
         await sortDropdown.click();
         await driver.findElement(By.css('select.product_sort_container option[value="az"]')).click();
 
-        // Ambil semua nama produk
         const productNames = await driver.findElements(By.css('.inventory_item_name'));
         const namesText = await Promise.all(productNames.map(el => el.getText()));
 
-        // Buat array terurut untuk dibandingkan
         const sortedNames = [...namesText].sort();
 
-        // Validasi hasil sort
         assert.deepStrictEqual(
             namesText,
             sortedNames,
